@@ -26,16 +26,17 @@ app.use("/api/payment/", paymentRoute);
 
 // connection
 
-const connection = async () => {
-  await mongoose.connect(process.env.MONGODB_URI);
-  console.log("connected to mongodb");
-};
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.6nys0kf.mongodb.net/Doctors-Portal?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(port, () => {
+      console.log("connected to backend");
+    });
+  });
 
 //api
 app.get("/", async (req, res) => {
   res.send("Doctors Portal server.");
-});
-
-app.listen(port, () => {
-  connection();
 });
